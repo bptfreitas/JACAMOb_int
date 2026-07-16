@@ -49,6 +49,15 @@ import java.util.logging.Logger;
  */
 public class Agent implements Serializable, ToDOM {
 
+
+    public static class ExternalException extends Exception {
+        public ExternalException(String message) {
+            super(message);
+        }
+    }
+
+    public native void CheckForInterrupts() throws ExternalException;
+
     @Serial
     private static final long serialVersionUID = -2628324957954474455L;
 
