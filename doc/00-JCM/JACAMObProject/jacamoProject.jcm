@@ -21,13 +21,13 @@ mas jacamoProject {
         join: livingRoom
         focus: livingRoom.airConditioner
         roles: housekeeper in householdStaff
-        ag-class: customizedAgent.MyAgent
-        ag-arch: customizedAgent.MyAgArch
+        // ag-class: customizedAgent.MyAgent
+        //ag-arch: customizedAgent.MyAgArch
     }
 
-    body rosie {
-        apparatus vacuumRobot : neck.DefaultApparatus("/dev/USB0")
-    }
+    // body rosie {
+      //  apparatus vacuumRobot : neck.DefaultApparatus("/dev/USB0")
+    //}
     
     workspace livingRoom {
         artifact airConditioner : jetsons.home.AirConditioner()
