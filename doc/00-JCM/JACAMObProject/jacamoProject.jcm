@@ -15,11 +15,10 @@
 mas jacamoProject {
 
     agent rosie: agtDescription.asl {
-        beliefs: cleaningMode(vaccum)
-          velocity(slow)
-        goals: saveBattery
-        join: livingRoom
-        focus: livingRoom.airConditioner
+        beliefs: turno("ping")
+        goals: ping            
+        // join: livingRoom
+        // focus: livingRoom.airConditioner
         roles: housekeeper in householdStaff
         // ag-class: customizedAgent.MyAgent
         //ag-arch: customizedAgent.MyAgArch
@@ -30,15 +29,15 @@ mas jacamoProject {
     //}
     
     workspace livingRoom {
-        artifact airConditioner : jetsons.home.AirConditioner()
-        artifact light : jetsons.home.Light()
+        // artifact airConditioner : jetsons.home.AirConditioner()
+        // artifact light : jetsons.home.Light()
     }
 
     organisation jetsonsFamily : jetsons.xml {
         group householdStaff : householdGroup {
-            responsible-for: cleanHouse
+            responsible-for: doPingPong
         }
 
-        scheme cleanHouse : cleaningScheme
+        scheme doPingPong : doPingPongScheme
     }
 }

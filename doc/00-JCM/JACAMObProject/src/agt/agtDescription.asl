@@ -5,7 +5,7 @@
 
 /* Initial beliefs and rules */
 
-/* Plans */
+/* Plans 
 +!saveBattery <- .wait(5000); !tryRestAndRecharge.
 
 +!tryRestAndRecharge[source(self)]: not busy<- .print("Done!"); .stopMAS.
@@ -14,3 +14,14 @@
 +!prepareCleaning[scheme(cleanHouse)] <- +busy; ?status(S); if (S == "on") { turnOff; }.
 +!cleanLivingRoom[scheme(cleanHouse)] <- .random(R); .wait(10000*R); .print("Cleaning the living room.").
 +!finishCleaning[scheme(cleanHouse)]  <- .print("Finishing the cleaning task."); ?status(S); if (S == "off") { turnOn; } -busy.
+*/
+
++!ping: turno( S ) & S = "ping" <-
+    .wait( 1000 );
+    .print( "Ping!");
+    -+turno("pong").
+
++!pong: turno ( S ) & S = "pong" <-
+    .wait( 1000 );
+    .print("PONG!" );
+    -+turno("ping").

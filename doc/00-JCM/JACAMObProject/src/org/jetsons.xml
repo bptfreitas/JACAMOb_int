@@ -23,6 +23,23 @@
     </structural-specification>
 
     <functional-specification>
+        <scheme id="doPingPongScheme">
+
+            <goal id="doPingPong">
+                <plan operator="choice">
+                    <goal id="ping" />
+
+                    <goal id="pong" />
+                </plan>
+            </goal>
+
+            <mission id="doPingPongMission" min="1" max="1">
+                <goal id="ping"/>
+                <goal id="pong"/>
+            </mission>
+
+        </scheme>
+<!--
         <scheme id="cleaningScheme">
             <goal id="cleanHouse">
                 <plan operator="sequence">
@@ -47,6 +64,7 @@
             </mission>
 
         </scheme>
+-->        
     </functional-specification>
 
     <normative-specification>
@@ -54,6 +72,6 @@
             id="housekeeperObligation"
             type="obligation"
             role="housekeeper"
-            mission="cleaningMission"/>
+            mission="doPingPongMission"/>
     </normative-specification>
 </organisational-specification>
