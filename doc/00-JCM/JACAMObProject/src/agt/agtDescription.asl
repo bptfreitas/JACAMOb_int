@@ -16,12 +16,22 @@
 +!finishCleaning[scheme(cleanHouse)]  <- .print("Finishing the cleaning task."); ?status(S); if (S == "off") { turnOn; } -busy.
 */
 
-+!ping: turno( S ) & S = "ping" <-
++!doPing <-
     .wait( 1000 );
     .print( "Ping!");
-    -+turno("pong").
+    .send( bob, achieve, doPong ).
 
-+!pong: turno ( S ) & S = "pong" <-
+-!doPing <-
+    .print( "Waiting my turn ... ");
     .wait( 1000 );
-    .print("PONG!" );
-    -+turno("ping").
+    !doPing.
+
+-!doPong <- 
+    .print( "Waiting my turn ... ");
+    .wait( 1000 );
+    !doPong.
+
++!doPong <-
+    .wait( 1000 );
+    .print("PONG!" );    
+    .send( alice, achieve, doPing ).    

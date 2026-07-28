@@ -17,7 +17,7 @@
 
         <group-specification id="householdGroup">
             <roles>
-                <role id="housekeeper" min="1" max="1"/>
+                <role id="housekeeper" />
             </roles>
         </group-specification>
     </structural-specification>
@@ -25,17 +25,25 @@
     <functional-specification>
         <scheme id="doPingPongScheme">
 
-            <goal id="doPingPong">
-                <plan operator="choice">
+            <goal id="doPing">
+                <!-->
+                <plan operator="sequence">
                     <goal id="ping" />
-
-                    <goal id="pong" />
                 </plan>
+                <-->
             </goal>
 
-            <mission id="doPingPongMission" min="1" max="1">
-                <goal id="ping"/>
-                <goal id="pong"/>
+            <goal id="doPong">
+                <!-->
+                <plan operator="sequence">
+                    <goal id="pong" />
+                </plan>
+                <-->
+            </goal>            
+
+            <mission id="doPingPongMission" min="1" max="2">
+                <goal id="doPing"/>
+                <goal id="doPong"/>
             </mission>
 
         </scheme>

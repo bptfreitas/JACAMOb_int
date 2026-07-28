@@ -14,15 +14,25 @@
 
 mas jacamoProject {
 
-    agent rosie: agtDescription.asl {
+    agent alice: agtDescription.asl {
         beliefs: turno("ping")
-        goals: ping            
+        goals: doPing      
         // join: livingRoom
         // focus: livingRoom.airConditioner
         roles: housekeeper in householdStaff
         // ag-class: customizedAgent.MyAgent
         //ag-arch: customizedAgent.MyAgArch
     }
+
+    agent bob: agtDescription.asl {
+        // beliefs: turno("pong")
+        goals: doPong                      
+        // join: livingRoom
+        // focus: livingRoom.airConditioner
+        roles: housekeeper in householdStaff
+        // ag-class: customizedAgent.MyAgent
+        //ag-arch: customizedAgent.MyAgArch
+    }    
 
     // body rosie {
       //  apparatus vacuumRobot : neck.DefaultApparatus("/dev/USB0")
@@ -35,7 +45,8 @@ mas jacamoProject {
 
     organisation jetsonsFamily : jetsons.xml {
         group householdStaff : householdGroup {
-            responsible-for: doPingPong
+            responsible-for: doPing
+                doPong
         }
 
         scheme doPingPong : doPingPongScheme
