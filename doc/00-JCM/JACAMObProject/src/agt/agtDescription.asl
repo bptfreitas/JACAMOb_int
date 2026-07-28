@@ -18,7 +18,8 @@
 
 +!doPing <-
     .wait( 1000 );
-    .print( "Ping!");
+    .time( HH, MM, SS );
+    .print( "[", HH, ":", MM, ":", SS ,"] Ping!");
     .send( bob, achieve, doPong ).
 
 -!doPing <-
@@ -33,5 +34,6 @@
 
 +!doPong <-
     .wait( 1000 );
-    .print("PONG!" );    
+    .time( HH, MM, SS );
+    .print( "[", HH, ":", MM, ":", SS ,"] PONG!");    
     .send( alice, achieve, doPing ).    
