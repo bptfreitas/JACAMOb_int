@@ -17,9 +17,11 @@
 */
 
 +!doPing <-
-    .wait( 1000 );
+    .wait( 2000 );
+    ?seq( Cycle );
     .time( HH, MM, SS );
-    .print( "[", HH, ":", MM, ":", SS ,"] Ping!");
+    .print( "[ Cycle ", Cycle, " ", HH, ":", MM, ":", SS ," ] Ping!");
+    -+seq( Cycle + 1 );
     .send( bob, achieve, doPong ).
 
 -!doPing <-
@@ -33,7 +35,9 @@
     !doPong.
 
 +!doPong <-
-    .wait( 1000 );
+    .wait( 2000 );
+    ?seq( Cycle );
     .time( HH, MM, SS );
-    .print( "[", HH, ":", MM, ":", SS ,"] PONG!");    
+    .print( "[ Cycle ", Cycle, " ", HH, ":", MM, ":", SS ," ] PONG!");
+    -+seq( Cycle + 1 );
     .send( alice, achieve, doPing ).    

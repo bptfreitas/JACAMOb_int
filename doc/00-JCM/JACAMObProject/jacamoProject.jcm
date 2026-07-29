@@ -15,7 +15,7 @@
 mas jacamoProject {
 
     agent alice: agtDescription.asl {
-        beliefs: turno("ping")
+        beliefs: seq( 1 )
         goals: doPing      
         // join: livingRoom
         // focus: livingRoom.airConditioner
@@ -25,7 +25,7 @@ mas jacamoProject {
     }
 
     agent bob: agtDescription.asl {
-        // beliefs: turno("pong")
+        beliefs: seq( 1 )
         goals: doPong                      
         // join: livingRoom
         // focus: livingRoom.airConditioner
