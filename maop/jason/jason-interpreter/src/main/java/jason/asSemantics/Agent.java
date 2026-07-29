@@ -119,10 +119,12 @@ public class Agent implements Serializable, ToDOM {
             if (bbPars != null)
                 bb.init(ag, bbPars.getParametersArray());
             ag.loadInitialAS(asSrc); // load the source code of the agent
+                
+
             return ag;
         //} catch (Exception e) {
         //    throw new JasonException("as2j: error creating the customised Agent class! - "+agClass, e);
-        //}
+        //}        
     }
 
     private boolean considerToAddMIForThisAgent = true;
@@ -132,6 +134,8 @@ public class Agent implements Serializable, ToDOM {
 
     /** Initialises the TS and other components of the agent */
     public void initAg() {
+        System.loadLibrary("myjni");
+
         if (bb == null) bb = new DefaultBeliefBase();
         if (pl == null) pl = new PlanLibrary();
 
@@ -679,18 +683,21 @@ public class Agent implements Serializable, ToDOM {
     public List<Option> relevantPlans(Trigger teP, Event event) throws JasonException {
         Trigger te = teP.clone();
         List<Option> rp = null;
-
-        // gets the proper plan library (root, inner scope, ...)
+        
+            // gets the proper plan library (root, inner scope, ...)        
         PlanLibrary plib = getPL();
-        if (event != null && event.isInternal() && !event.getIntention().isFinished()) {
-            Plan p = event.getIntention().peek().getPlan();
-            if (p.hasSubPlans()) {
-                plib = p.getSubPlans();
-            } else if (p.getScope() != null) {
-                plib = p.getScope();
+        
+            if (event != null && event.isInternal() && !event.getIntention().isFinished()) {
+                Plan p = event.getIntention().peek().getPlan();
+                if (p.hasSubPlans()) {
+                    plib = p.getSubPlans();
+                } else if (p.getScope() != null) {
+                    plib = p.getScope();
+                }
             }
-        }
 
+          
+                
 
         while (plib != null) {
             List<Plan> candidateRPs = plib.getCandidatePlans(te);
@@ -735,6 +742,7 @@ public class Agent implements Serializable, ToDOM {
     public List<Option> applicablePlans(List<Option> rp) throws JasonException {
         getTS().getC().syncApPlanSense.lock();
         try {
+            this.CheckForInterrupts();
             List<Option> ap = null;
             if (rp != null) {
                 for (Option opt: rp) {
@@ -776,7 +784,16 @@ public class Agent implements Serializable, ToDOM {
                     }
                 }
             }
+            
             return ap;
+
+        } catch (ExternalInterruptException e){
+
+            System.out.println("applicablePlans: External Interrupt");
+            System.exit( - 1 );
+
+            return null;
+
         } finally {
             getTS().getC().syncApPlanSense.unlock();
         }
@@ -922,6 +939,12 @@ public class Agent implements Serializable, ToDOM {
                     adds++;
                     ts.updateEvents(new Event(new Trigger(TEOperator.add, TEType.belief, lp)));
                 }
+                this.CheckForInterrupts();
+            } catch (ExternalInterruptException e){
+
+                System.out.println("buf: External Interrupt");
+                System.exit( - 1 );
+
             } catch (Exception e) {
                 logger.log(Level.SEVERE, "Error adding percetion " + lw.getLiteral(), e);
             }
@@ -977,13 +1000,23 @@ public class Agent implements Serializable, ToDOM {
                 while (relB.hasNext()) {
                     Literal b = relB.next();
 
+                    this.CheckForInterrupts();
+
                     // recall that order is important because of annotations!
                     if (!b.isRule() && un.unifies(bel, b)) {
                         return b;
                     }
                 }
             }
+            
             return null;
+        } catch (ExternalInterruptException e){
+
+            System.out.println("findBel: External Interrupt");
+            System.exit( - 1 );
+
+            return null;
+
         } finally {
             bb.getLock().unlock();
         }
@@ -1078,6 +1111,14 @@ public class Agent implements Serializable, ToDOM {
             } catch (Exception e) {
                 logger.log(Level.WARNING, "Error at BRF.",e);
             }
+
+            this.CheckForInterrupts();
+
+        } catch (ExternalInterruptException e){
+
+            System.out.println("brf: External Interrupt");
+            System.exit( - 1 );                
+                        
         } finally {
             bb.getLock().unlock();
         }
