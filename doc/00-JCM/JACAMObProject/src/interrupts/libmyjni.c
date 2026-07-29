@@ -1,7 +1,5 @@
 #include <jni.h>
 
-#include <PingPong.h>
-
 #include <iostream>
 
 #include <unistd.h>
@@ -9,13 +7,15 @@
 #include <sys/stat.h>
 #include <sys/wait.h>
 
+#include <libjasonint.h>
+
 extern "C"
-JNIEXPORT void JNICALL Java_Agent_CheckForInterrupts
+JNIEXPORT void JNICALL Java_jason_asSemantics_Agent_CheckForInterrupts
   (JNIEnv *env, jobject obj)
 {
     static int counter = 0;
     // Find the exception class
-    jclass excClass = env->FindClass("Agent$ExternalInterruptException");
+    jclass excClass = env->FindClass("jason$asSemantics$Agent$ExternalInterruptException");
     if (excClass == nullptr) {
         // ClassNotFoundException is already pending.
         return;
