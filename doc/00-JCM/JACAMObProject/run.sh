@@ -50,7 +50,7 @@ cd ../../../
 mvn clean package
 mv target/*-all.jar $HERE/JACAMOb.jar -v
 cd $HERE
-LD_LIBRARY_PATH="$HERE/src/interrupts" java -jar JACAMOb.jar *.jcm
+LD_LIBRARY_PATH=$HERE/src/interrupts java -jar JACAMOb.jar *.jcm
 #echo "Starting the MAS!"
 #mvn -f ../../../pom.xml clean compile exec:java \
 #  -Dexec.mainClass="jacamo.infra.JaCaMoLauncher" \
