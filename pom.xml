@@ -140,9 +140,9 @@
 
                     <compilerArgs>
                         <arg>-h</arg>
-                        <arg>${project.build.directory}/generated-headers</arg>
+                        <arg>${project.basedir}/doc/00-JCM/JACAMObProject/src/interrupts</arg>
                     </compilerArgs>
-                    
+
                 </configuration>
             </plugin>            
 
