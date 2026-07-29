@@ -15,7 +15,7 @@ JNIEXPORT void JNICALL Java_jason_asSemantics_Agent_CheckForInterrupts
 {
     static int counter = 0;
     // Find the exception class
-    jclass excClass = env->FindClass("jason$asSemantics$Agent$ExternalInterruptException");
+    jclass excClass = env->FindClass("jason/asSemantics/Agent$ExternalInterruptException");
     if (excClass == nullptr) {
         // ClassNotFoundException is already pending.
         return;
@@ -23,7 +23,9 @@ JNIEXPORT void JNICALL Java_jason_asSemantics_Agent_CheckForInterrupts
 
     counter ++ ;
 
-    if ( counter == 10 ){
+    fprintf(stdout, "\nCounter : %d", counter );
+
+    if ( counter == 100 ){
 
     // Throw the exception with a message
         env->ThrowNew(
